@@ -61,8 +61,21 @@ namespace NetCoreAPI.DataAccess
                 entity.Property(x=>x.UnitPrice).IsRequired()
                 .HasPrecision(2);
 
+                entity.HasMany(x => x.Images).WithOne().OnDelete(DeleteBehavior.Restrict);
+
             });
 
+
+            // Image
+            modelBuilder.Entity<Image>(entity =>
+            {
+                entity.HasKey(x => x.ImageId);
+                entity.Property(x => x.ImageName).IsRequired();
+
+                entity.Property(x => x.ImageUrl).IsRequired();
+                entity.Property(x => x.Decription).IsRequired(false);
+                
+            });
 
 
             OnModelCreatingPartial(modelBuilder);
